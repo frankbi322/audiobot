@@ -8,6 +8,12 @@ if(platform === 'win32') {
     var winsay = require('winsay');
 }
 
+//Todo:
+// Cool Question x
+// Nice!, Alright!
+// Get back to work!
+// Good Morning, Everyone! x
+
 
 //use this to set whether feedback bot is listening. If he's not, feedback will not be given - on at start.
 
@@ -58,6 +64,36 @@ slack.on('open', function () {
     }
 });
 
+
+var now = new Date();
+var millisTill10 = new Date(now.getFullYear(), now.getMonth(), now.getDate(), 10, 0, 0, 0) - now;
+if (millisTill10 < 0) {
+    //  millisTill10 += 86400000; // it's after 10am, try 10am tomorrow.
+      millisTill10 += 1485437280; // it's after 10am, try 10am tomorrow.
+}
+setTimeout(goodMorning, millisTill10);
+
+function goodMorning(){
+  var outputDevice = '';
+  var player = 'afplay ';
+  if(platform === 'win32') {
+      player = 'mplayer ';
+  } else {
+      outputDevice = '';
+  }
+  var toPlayMp3 = 'sounds/bell.mp3'; //replace with cool question
+  fs.exists(toPlayMp3,function(existsMp3) { //mp3 version of loop
+      if(existsMp3) {
+          exec(player + outputDevice + ' ' + toPlayMp3);
+          played = 'played';
+          channel.send('Played sound: "' + toPlayMp3 + '"');
+          console.log('playing: ' + toPlayMp3);
+      }
+  });
+  return;
+}
+
+
 slack.on('message', function(message) {
     //get current time
     currentTime = Math.floor(Date.now()/1000);
@@ -89,6 +125,134 @@ slack.on('message', function(message) {
                 }
             } else {
                 outputDevice = '';
+            }
+
+            var sureTriggers = ["i think", "what if", "don't get", "dont get"];
+            var totalSureTriggers = 0;
+            const sures = sureTriggers.forEach(el => {
+              if (message.text.toLowerCase().indexOf(el) !== -1) {
+              totalSureTriggers +=1;
+              }
+            })
+
+            if ((totalSureTriggers > 0) && (started === true)) {
+              var toPlayMp3 = 'sounds/inception.mp3'; //replace with cool question
+              fs.exists(toPlayMp3,function(existsMp3) { //mp3 version of loop
+                  if(existsMp3) {
+                      exec(player + outputDevice + ' ' + toPlayMp3);
+                      played = 'played';
+                      channel.send('Played sound: "' + toPlayMp3 + '"');
+                      console.log('playing: ' + toPlayMp3);
+                  }
+              });
+              return;
+            }
+
+            const questionTriggers = ["how","can","why"];
+            var totalQuestions = 0;
+            const questions = questionTriggers.forEach(el=>{
+              if (message.text.toLowerCase().indexOf(el) !== -1) {
+              totalQuestions +=1;
+              }
+            });
+
+            var hasQuestion = message.text.indexOf("?"); // Cool Question. Consider expanding to include "how, why, can, who"
+
+            if ((hasQuestion > -1) && (totalQuestions > 0) && (started === true)) {
+              var toPlayMp3 = 'sounds/drama.mp3'; //replace with cool question
+              fs.exists(toPlayMp3,function(existsMp3) { //mp3 version of loop
+                  if(existsMp3) {
+                      exec(player + outputDevice + ' ' + toPlayMp3);
+                      played = 'played';
+                      channel.send('Played sound: "' + toPlayMp3 + '"');
+                      console.log('playing: ' + toPlayMp3);
+                  }
+              });
+              return;
+            }
+
+            var morning = message.text.toLowerCase().indexOf("good morning everyone");
+            if ((morning > -1) && (started === true)) {
+              var toPlayMp3 = 'sounds/ohmy.mp3'; //replace with cool question
+              fs.exists(toPlayMp3,function(existsMp3) { //mp3 version of loop
+                  if(existsMp3) {
+                      exec(player + outputDevice + ' ' + toPlayMp3);
+                      played = 'played';
+                      channel.send('Played sound: "' + toPlayMp3 + '"');
+                      console.log('playing: ' + toPlayMp3);
+                  }
+              });
+              return;
+            }
+
+            var afternoon = message.text.toLowerCase().indexOf("good afternoon everyone");
+            if ((afternoon > -1) && (started === true)) {
+              var toPlayMp3 = 'sounds/crickets.mp3'; //replace with cool question
+              fs.exists(toPlayMp3,function(existsMp3) { //mp3 version of loop
+                  if(existsMp3) {
+                      exec(player + outputDevice + ' ' + toPlayMp3);
+                      played = 'played';
+                      channel.send('Played sound: "' + toPlayMp3 + '"');
+                      console.log('playing: ' + toPlayMp3);
+                  }
+              });
+              return;
+            }
+
+            var evening = message.text.toLowerCase().indexOf("good evening everyone");
+            if ((evening > -1) && (started === true)) {
+              var toPlayMp3 = 'sounds/ohyeah.mp3'; //replace with cool question
+              fs.exists(toPlayMp3,function(existsMp3) { //mp3 version of loop
+                  if(existsMp3) {
+                      exec(player + outputDevice + ' ' + toPlayMp3);
+                      played = 'played';
+                      channel.send('Played sound: "' + toPlayMp3 + '"');
+                      console.log('playing: ' + toPlayMp3);
+                  }
+              });
+              return;
+            }
+
+            var sad = message.text.toLowerCase().indexOf(":(");
+            if ((sad > -1) && (started === true)) {
+              var toPlayMp3 = 'sounds/trombone.mp3'; //replace with cool question
+              fs.exists(toPlayMp3,function(existsMp3) { //mp3 version of loop
+                  if(existsMp3) {
+                      exec(player + outputDevice + ' ' + toPlayMp3);
+                      played = 'played';
+                      channel.send('Played sound: "' + toPlayMp3 + '"');
+                      console.log('playing: ' + toPlayMp3);
+                  }
+              });
+              return;
+            }
+
+            var fail = message.text.toLowerCase().indexOf("fail");
+            if ((fail > -1) && (started === true)) {
+              var toPlayMp3 = 'sounds/horn.mp3';
+              fs.exists(toPlayMp3,function(existsMp3) { //mp3 version of loop
+                  if(existsMp3) {
+                      exec(player + outputDevice + ' ' + toPlayMp3);
+                      played = 'played';
+                      channel.send('Played sound: "' + toPlayMp3 + '"');
+                      console.log('playing: ' + toPlayMp3);
+                  }
+              });
+              return;
+            }
+
+            var hasExclamation = message.text.indexOf("!!!"); // Alright!
+            if ((hasExclamation > -1) && (started === true)) {
+              var toPlayMp3 = 'sounds/airhorn.mp3'; //replace with cool question
+              fs.exists(toPlayMp3,function(existsMp3) { //mp3 version of loop
+                  if(existsMp3) {
+                      exec(player + outputDevice + ' ' + toPlayMp3);
+                      played = 'played';
+                      channel.send('Played sound: "' + toPlayMp3 + '"');
+                      console.log('playing: ' + toPlayMp3);
+                  }
+              });
+              return;
             }
 
 
