@@ -64,46 +64,13 @@ slack.on('open', function () {
     }
 });
 
-
-var now = new Date();
-var millisTill10 = new Date(now.getFullYear(), now.getMonth(), now.getDate(), 10, 0, 0, 0) - now;
-if (millisTill10 < 0) {
-    //  millisTill10 += 86400000; // it's after 10am, try 10am tomorrow.
-      millisTill10 += 1485437280; // it's after 10am, try 10am tomorrow.
-}
-setTimeout(goodMorning, millisTill10);
-
-function goodMorning(){
-  var outputDevice = '';
-  var player = 'afplay ';
-  if(platform === 'win32') {
-      player = 'mplayer ';
-  } else {
-      outputDevice = '';
-  }
-  var toPlayMp3 = 'sounds/bell.mp3'; //replace with cool question
-  fs.exists(toPlayMp3,function(existsMp3) { //mp3 version of loop
-      if(existsMp3) {
-          exec(player + outputDevice + ' ' + toPlayMp3);
-          played = 'played';
-          channel.send('Played sound: "' + toPlayMp3 + '"');
-          console.log('playing: ' + toPlayMp3);
-      }
-  });
-  return;
-}
-
-
 slack.on('message', function(message) {
-    //get current time
+    //get current time, avoid infinite loops
     currentTime = Math.floor(Date.now()/1000);
     if(currentTime - message.ts > 10) {
-        //current message is older than 10 seconds, so ignore this - this is to stop the bot from spamming the channel like it did that time.
         return false;
     }
 
-
-    //console.log('started = ' + started);
     var channel = slack.getChannelGroupOrDMByID(message.channel);
     var user = slack.getUserByID(message.user);
 
@@ -159,7 +126,7 @@ slack.on('message', function(message) {
             var hasQuestion = message.text.indexOf("?"); // Cool Question. Consider expanding to include "how, why, can, who"
 
             if ((hasQuestion > -1) && (totalQuestions > 0) && (started === true)) {
-              var toPlayMp3 = 'sounds/drama.mp3'; //replace with cool question
+              var toPlayMp3 = 'sounds/coolquestion.m4a'; //replace with cool question
               fs.exists(toPlayMp3,function(existsMp3) { //mp3 version of loop
                   if(existsMp3) {
                       exec(player + outputDevice + ' ' + toPlayMp3);
@@ -173,7 +140,7 @@ slack.on('message', function(message) {
 
             var morning = message.text.toLowerCase().indexOf("good morning everyone");
             if ((morning > -1) && (started === true)) {
-              var toPlayMp3 = 'sounds/ohmy.mp3'; //replace with cool question
+              var toPlayMp3 = 'sounds/morning.mp3'; //replace with cool question
               fs.exists(toPlayMp3,function(existsMp3) { //mp3 version of loop
                   if(existsMp3) {
                       exec(player + outputDevice + ' ' + toPlayMp3);
