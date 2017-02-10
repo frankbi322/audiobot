@@ -94,7 +94,7 @@ slack.on('message', function(message) {
                 outputDevice = '';
             }
 
-            var sureTriggers = ["i think", "what if", "don't get", "dont get"];
+            var sureTriggers = ["i think", "what if", "don't get", "can you", "dont get"];
             var totalSureTriggers = 0;
             const sures = sureTriggers.forEach(el => {
               if (message.text.toLowerCase().indexOf(el) !== -1) {
@@ -103,7 +103,7 @@ slack.on('message', function(message) {
             })
 
             if ((totalSureTriggers > 0) && (started === true)) {
-              var toPlayMp3 = 'sounds/inception.mp3'; //replace with cool question
+              var toPlayMp3 = 'sounds/sure.mp3'; //replace with cool question
               fs.exists(toPlayMp3,function(existsMp3) { //mp3 version of loop
                   if(existsMp3) {
                       exec(player + outputDevice + ' ' + toPlayMp3);
@@ -126,7 +126,7 @@ slack.on('message', function(message) {
             var hasQuestion = message.text.indexOf("?"); // Cool Question. Consider expanding to include "how, why, can, who"
 
             if ((hasQuestion > -1) && (totalQuestions > 0) && (started === true)) {
-              var toPlayMp3 = 'sounds/coolquestion.m4a'; //replace with cool question
+              var toPlayMp3 = 'sounds/coolquestion.mp3'; //replace with cool question
               fs.exists(toPlayMp3,function(existsMp3) { //mp3 version of loop
                   if(existsMp3) {
                       exec(player + outputDevice + ' ' + toPlayMp3);
@@ -140,7 +140,7 @@ slack.on('message', function(message) {
 
             var morning = message.text.toLowerCase().indexOf("good morning everyone");
             if ((morning > -1) && (started === true)) {
-              var toPlayMp3 = 'sounds/morning.mp3'; //replace with cool question
+              var toPlayMp3 = 'sounds/goodmorning.mp3'; //replace with cool question
               fs.exists(toPlayMp3,function(existsMp3) { //mp3 version of loop
                   if(existsMp3) {
                       exec(player + outputDevice + ' ' + toPlayMp3);
@@ -154,7 +154,7 @@ slack.on('message', function(message) {
 
             var afternoon = message.text.toLowerCase().indexOf("good afternoon everyone");
             if ((afternoon > -1) && (started === true)) {
-              var toPlayMp3 = 'sounds/crickets.mp3'; //replace with cool question
+              var toPlayMp3 = 'sounds/goodafternoon.mp3'; //replace with cool question
               fs.exists(toPlayMp3,function(existsMp3) { //mp3 version of loop
                   if(existsMp3) {
                       exec(player + outputDevice + ' ' + toPlayMp3);
@@ -168,7 +168,7 @@ slack.on('message', function(message) {
 
             var evening = message.text.toLowerCase().indexOf("good evening everyone");
             if ((evening > -1) && (started === true)) {
-              var toPlayMp3 = 'sounds/ohyeah.mp3'; //replace with cool question
+              var toPlayMp3 = 'sounds/goodevening.mp3'; //replace with cool question
               fs.exists(toPlayMp3,function(existsMp3) { //mp3 version of loop
                   if(existsMp3) {
                       exec(player + outputDevice + ' ' + toPlayMp3);
