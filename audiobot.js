@@ -8,14 +8,6 @@ if(platform === 'win32') {
     var winsay = require('winsay');
 }
 
-//Todo:
-// Cool Question x
-// Nice!, Alright!
-// Get back to work!
-// Good Morning, Everyone! x
-
-
-//use this to set whether feedback bot is listening. If he's not, feedback will not be given - on at start.
 
 var started = true;
 var slack = new Slack(config.token, true, true);
@@ -65,7 +57,6 @@ slack.on('open', function () {
 });
 
 slack.on('message', function(message) {
-    //get current time, avoid infinite loops
     currentTime = Math.floor(Date.now()/1000);
     if(currentTime - message.ts > 10) {
         return false;
