@@ -2,7 +2,7 @@ Welcome!
 
 ## What is Audiobot?
 
-Audiobot is an audio feedback bot for Slack.  Slack Audiobot is written in node.js and plays MP3 files from its /sound directory based on queues from Slack users.
+Audiobot is an audio feedback bot for Slack.  Slack Audiobot is written in node.js and plays MP3 files from its /sound directory based on messages from Slack users.
 
 
 ## How to install Audiobot
